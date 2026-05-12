@@ -24,14 +24,27 @@ API Gateway (:8080)
     ├── MS-03  Reservas              :8083
     ├── MS-04  Control de Tiempo     :8084
     ├── MS-05  Membresías            :8085
-    ├── MS-06  Pagos                 :8086
-    ├── MS-07  Lista de Espera       :8087
-    ├── MS-08  Notificaciones        :8088
-    ├── MS-09  Reportes              :8089
-    └── MS-10  Promociones           :8090
+    ├── ms-06-pago                   :8086
+    ├── ms-07-lista-espera           :8087
+    ├── ms-08-notificacion           :8088
+    ├── ms-09-reporte                :8089
+    └── ms-10-promocion              :8090
 
 Eureka Server (:8761) — service discovery
 ```
+
+---
+
+🗄️ db_usuarios        → MS-01 (Usuario & Auth)
+🗄️ db_estaciones      → MS-02 (Estaciones)
+🗄️ db_reservas        → MS-03 (Reservas)
+🗄️ db_sesiones        → MS-04 (Control de Tiempo)
+🗄️ db_membresias      → MS-05 (Membresías)
+🗄️ db_pagos           → MS-06 (Pagos)
+🗄️ db_espera          → MS-07 (Lista de Espera)
+🗄️ db_notificaciones  → MS-08 (Notificaciones)
+🗄️ db_reportes        → MS-09 (Reportes)
+🗄️ db_promociones     → MS-10 (Promociones)
 
 ---
 
@@ -71,3 +84,5 @@ cd GameCenter
 ## Estado del proyecto
 
 En desarrollo — proyecto semestral Full Stack I, 2026.
+
+
