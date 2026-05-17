@@ -15,9 +15,11 @@ import java.time.LocalDateTime;
 public class UsuarioEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "rol_id")
     private RolEntity rol;
 
     private String nombre;
@@ -33,5 +35,12 @@ public class UsuarioEntity {
 
     private Boolean activo;
 
+    @Column(updatable = false)
     private LocalDateTime createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+        this.activo = true;
+    }
 }

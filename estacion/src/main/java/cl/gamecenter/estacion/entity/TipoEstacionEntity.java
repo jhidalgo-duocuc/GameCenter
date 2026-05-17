@@ -14,11 +14,14 @@ public class TipoEstacionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String nombre;
 
     private String descripcion;
 
+    @Column(nullable = false)
     private BigDecimal precioHora;
 
+    @Column(nullable = false)
     private Boolean activo;
 }

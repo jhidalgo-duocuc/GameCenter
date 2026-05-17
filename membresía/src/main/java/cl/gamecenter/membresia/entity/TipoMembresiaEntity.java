@@ -13,10 +13,20 @@ public class TipoMembresiaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private String nombre;
     private String descripcion;
+
+    @Column(nullable = false)
     private BigDecimal precioMensual;
+
+    @Column(nullable = false)
     private Integer horasIncluidas;
+
+    @Column(nullable = false)
     private BigDecimal descuentoPct;
+
+    @Column(nullable = false)
     private Boolean activo;
 }

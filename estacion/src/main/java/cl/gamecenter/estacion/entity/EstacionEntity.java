@@ -15,21 +15,37 @@ public class EstacionEntity {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "tipo_estacion_id", nullable = false)
     private TipoEstacionEntity tipoEstacion;
 
+    @Column(nullable = false)
     private String nombre;
 
+    @Column(columnDefinition = "TEXT")
     private String especificaciones;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private EstadoEstacion estado;
 
-    private LocalDateTime updateAt;
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        this.estado = EstadoEstacion.DISPONIBLE;
+        this.updatedAt = LocalDateTime.now();
+    }
 
     public enum EstadoEstacion {
-        disponible,
-        ocupada,
-        mantenimiento,
-        inactiva
+        DISPONIBLE,
+        OCUPADA,
+        MANTENIMIENTO,
+        INACTIVA
     }
 }

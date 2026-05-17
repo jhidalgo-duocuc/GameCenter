@@ -15,6 +15,7 @@ public class TokenAuthEntity {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "usuario_id")
     private UsuarioEntity usuario;
 
     @Column(unique = true)
@@ -23,13 +24,14 @@ public class TokenAuthEntity {
     @Enumerated(EnumType.STRING)
     private TipoToken tipo;
 
+    @Column(name = "expira_en")
     private LocalDateTime expiracion;
 
     private Boolean usado;
 
     public enum TipoToken {
-        acces,
-        refresh,
-        reset_password
+        ACCESS,
+        REFRESH,
+        RESET_PASSWORD
     }
 }
