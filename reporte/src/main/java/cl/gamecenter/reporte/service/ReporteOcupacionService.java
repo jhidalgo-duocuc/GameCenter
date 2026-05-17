@@ -1,9 +1,11 @@
 package cl.gamecenter.reporte.service;
 
+import cl.gamecenter.reporte.client.EstacionClient;
 import cl.gamecenter.reporte.dto.ReporteOcupacionRequestDTO;
 import cl.gamecenter.reporte.dto.ReporteOcupacionResponseDTO;
 import cl.gamecenter.reporte.entity.ReporteOcupacionEntity;
 import cl.gamecenter.reporte.repository.ReporteOcupacionRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -11,15 +13,15 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ReporteOcupacionService {
 
     private final ReporteOcupacionRepository reporteOcupacionRepository;
-
-    public ReporteOcupacionService(ReporteOcupacionRepository reporteOcupacionRepository) {
-        this.reporteOcupacionRepository = reporteOcupacionRepository;
-    }
+    private final EstacionClient estacionClient;
 
     public ReporteOcupacionResponseDTO crear(ReporteOcupacionRequestDTO request) {
+        estacionClient.buscarPorId(request.getEstacionId());
+
         ReporteOcupacionEntity guardado = reporteOcupacionRepository.save(toEntity(request));
         return toResponse(guardado);
     }

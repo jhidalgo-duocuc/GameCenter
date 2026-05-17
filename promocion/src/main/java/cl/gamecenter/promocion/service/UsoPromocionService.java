@@ -1,10 +1,15 @@
 package cl.gamecenter.promocion.service;
 
+import cl.gamecenter.promocion.client.PagoClient;
+import cl.gamecenter.promocion.client.UsuarioClient;
+import cl.gamecenter.promocion.dto.PagoClientDTO;
 import cl.gamecenter.promocion.dto.UsoPromocionRequestDTO;
 import cl.gamecenter.promocion.dto.UsoPromocionResponseDTO;
+import cl.gamecenter.promocion.dto.UsuarioClientDTO;
 import cl.gamecenter.promocion.entity.CodigoDescuentoEntity;
 import cl.gamecenter.promocion.entity.UsoPromocionEntity;
 import cl.gamecenter.promocion.repository.UsoPromocionRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -12,19 +17,25 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UsoPromocionService {
 
     private final UsoPromocionRepository usoPromocionRepository;
     private final CodigoDescuentoService codigoDescuentoService;
-
-    public UsoPromocionService(
-            UsoPromocionRepository usoPromocionRepository,
-            CodigoDescuentoService codigoDescuentoService) {
-        this.usoPromocionRepository = usoPromocionRepository;
-        this.codigoDescuentoService = codigoDescuentoService;
-    }
+    private final UsuarioClient usuarioClient;
+    private final PagoClient pagoClient;
 
     public UsoPromocionResponseDTO crear(UsoPromocionRequestDTO request) {
+        UsuarioClientDTO usuario = usuarioClient.buscarPorId(request.getUsuarioId());
+        if (!Boolean.TRUE.equals(usuario.getActivo())) {
+            throw new RuntimeException("El usuario no está activo");
+        }
+
+        PagoClientDTO pago = pagoClient.buscarPorId(request.getPagoId());
+        if (!request.getUsuarioId().equals(pago.getUsuarioId())) {
+            throw new RuntimeException("El pago no pertenece al usuario");
+        }
+
         UsoPromocionEntity guardado = usoPromocionRepository.save(toEntity(request));
         return toResponse(guardado);
     }

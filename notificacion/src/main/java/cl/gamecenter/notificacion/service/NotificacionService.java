@@ -1,9 +1,12 @@
 package cl.gamecenter.notificacion.service;
 
+import cl.gamecenter.notificacion.client.UsuarioClient;
 import cl.gamecenter.notificacion.dto.NotificacionRequestDTO;
 import cl.gamecenter.notificacion.dto.NotificacionResponseDTO;
+import cl.gamecenter.notificacion.dto.UsuarioClientDTO;
 import cl.gamecenter.notificacion.entity.NotificacionEntity;
 import cl.gamecenter.notificacion.repository.NotificacionRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -11,15 +14,18 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class NotificacionService {
 
     private final NotificacionRepository notificacionRepository;
-
-    public NotificacionService(NotificacionRepository notificacionRepository) {
-        this.notificacionRepository = notificacionRepository;
-    }
+    private final UsuarioClient usuarioClient;
 
     public NotificacionResponseDTO crear(NotificacionRequestDTO request) {
+        UsuarioClientDTO usuario = usuarioClient.buscarPorId(request.getUsuarioId());
+        if (!Boolean.TRUE.equals(usuario.getActivo())) {
+            throw new RuntimeException("El usuario no está activo");
+        }
+
         NotificacionEntity guardado = notificacionRepository.save(toEntity(request));
         return toResponse(guardado);
     }
