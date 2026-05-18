@@ -21,10 +21,17 @@ public class PromocionEntity {
     private String nombre;
     private String descripcion;
 
-    private String tipo;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private TipoPromocion tipo;
 
     private BigDecimal descuentoPct;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
     private Boolean activo;
+
+    public enum TipoPromocion {
+        PORCENTAJE,
+        MONTO_FIJO
+    }
 }

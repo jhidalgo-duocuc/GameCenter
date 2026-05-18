@@ -21,7 +21,9 @@ public class EntradaEsperaEntity {
     private Long tipoEstacionId;
     private Integer posicion;
 
-    private String estado;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private EstadoEspera estado;
 
     private LocalDateTime fechaIngreso;
 
@@ -30,4 +32,12 @@ public class EntradaEsperaEntity {
 
     @Column(nullable = true)
     private LocalDateTime expiraEn;
+
+    public enum EstadoEspera {
+        ESPERANDO,
+        NOTIFICADO,
+        ATENDIDO,
+        EXPIRADO,
+        CANCELADO
+    }
 }
