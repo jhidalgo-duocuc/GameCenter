@@ -4,7 +4,7 @@ import cl.gamecenter.lista_espera.dto.NotificacionClientDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
-@FeignClient(name = "notificacion-service", url = "http://localhost:8088")
+@FeignClient(name = "notificacion")
 public interface NotificacionClient {
 
     @PostMapping("/api/notificaciones")

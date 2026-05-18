@@ -4,7 +4,7 @@ import cl.gamecenter.pago.dto.MembresiaClientDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
-@FeignClient(name = "membresia-service", url = "http://localhost:8085")
+@FeignClient(name = "membresia")
 public interface MembresiaClient {
 
     @GetMapping("/api/membresias/{id}")

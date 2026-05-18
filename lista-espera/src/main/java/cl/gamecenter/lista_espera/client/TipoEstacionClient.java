@@ -4,7 +4,7 @@ import cl.gamecenter.lista_espera.dto.TipoEstacionClientDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
-@FeignClient(name = "estacion-service", url = "http://localhost:8082")
+@FeignClient(name = "estacion")
 public interface TipoEstacionClient {
 
     @GetMapping("/api/tipos-estacion/{id}")
