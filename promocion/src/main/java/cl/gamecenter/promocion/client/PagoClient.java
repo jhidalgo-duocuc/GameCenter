@@ -4,7 +4,7 @@ import cl.gamecenter.promocion.dto.PagoClientDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
-@FeignClient(name = "pago-service", url = "http://localhost:8086")
+@FeignClient(name = "pago")
 public interface PagoClient {
 
     @GetMapping("/api/pagos/{id}")
