@@ -3,6 +3,7 @@ package cl.gamecenter.promocion.service;
 import cl.gamecenter.promocion.dto.PromocionRequestDTO;
 import cl.gamecenter.promocion.dto.PromocionResponseDTO;
 import cl.gamecenter.promocion.entity.PromocionEntity;
+import cl.gamecenter.promocion.entity.PromocionEntity.TipoPromocion;
 import cl.gamecenter.promocion.repository.PromocionRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -62,7 +63,7 @@ public class PromocionService {
     private void aplicarRequest(PromocionEntity entity, PromocionRequestDTO request) {
         entity.setNombre(request.getNombre());
         entity.setDescripcion(request.getDescripcion());
-        entity.setTipo(request.getTipo());
+        entity.setTipo(TipoPromocion.valueOf(request.getTipo()));
         entity.setDescuentoPct(request.getDescuentoPct());
         entity.setFechaInicio(request.getFechaInicio());
         entity.setFechaFin(request.getFechaFin());
@@ -74,7 +75,7 @@ public class PromocionService {
         response.setId(entity.getId());
         response.setNombre(entity.getNombre());
         response.setDescripcion(entity.getDescripcion());
-        response.setTipo(entity.getTipo());
+        response.setTipo(entity.getTipo().name());
         response.setDescuentoPct(entity.getDescuentoPct());
         response.setFechaInicio(entity.getFechaInicio());
         response.setFechaFin(entity.getFechaFin());

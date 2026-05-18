@@ -5,6 +5,8 @@ import cl.gamecenter.notificacion.dto.NotificacionRequestDTO;
 import cl.gamecenter.notificacion.dto.NotificacionResponseDTO;
 import cl.gamecenter.notificacion.dto.UsuarioClientDTO;
 import cl.gamecenter.notificacion.entity.NotificacionEntity;
+import cl.gamecenter.notificacion.entity.NotificacionEntity.CanalNotificacion;
+import cl.gamecenter.notificacion.entity.NotificacionEntity.TipoNotificacion;
 import cl.gamecenter.notificacion.repository.NotificacionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -62,11 +64,11 @@ public class NotificacionService {
 
     private void aplicarRequest(NotificacionEntity entity, NotificacionRequestDTO request) {
         entity.setUsuarioId(request.getUsuarioId());
-        entity.setTipo(request.getTipo());
+        entity.setTipo(TipoNotificacion.valueOf(request.getTipo()));
         entity.setTitulo(request.getTitulo());
         entity.setMensaje(request.getMensaje());
         entity.setLeida(request.getLeida());
-        entity.setCanal(request.getCanal());
+        entity.setCanal(CanalNotificacion.valueOf(request.getCanal()));
         entity.setCreatedAt(request.getCreatedAt());
     }
 
@@ -74,11 +76,11 @@ public class NotificacionService {
         NotificacionResponseDTO response = new NotificacionResponseDTO();
         response.setId(entity.getId());
         response.setUsuarioId(entity.getUsuarioId());
-        response.setTipo(entity.getTipo());
+        response.setTipo(entity.getTipo().name());
         response.setTitulo(entity.getTitulo());
         response.setMensaje(entity.getMensaje());
         response.setLeida(entity.getLeida());
-        response.setCanal(entity.getCanal());
+        response.setCanal(entity.getCanal().name());
         response.setCreatedAt(entity.getCreatedAt());
         return response;
     }

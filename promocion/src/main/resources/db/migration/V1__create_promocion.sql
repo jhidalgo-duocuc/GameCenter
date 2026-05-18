@@ -2,7 +2,7 @@ CREATE TABLE promocion (
     id              BIGINT          NOT NULL AUTO_INCREMENT,
     nombre          VARCHAR(255)    NOT NULL,
     descripcion     VARCHAR(500)    NOT NULL,
-    tipo            VARCHAR(50)     NOT NULL,
+    tipo            ENUM('PORCENTAJE', 'MONTO_FIJO') NOT NULL,
     descuento_pct   DECIMAL(19, 2)  NOT NULL,
     fecha_inicio    DATE            NOT NULL,
     fecha_fin       DATE            NOT NULL,
@@ -34,19 +34,13 @@ CREATE TABLE uso_promocion (
         FOREIGN KEY (codigo_descuento_id) REFERENCES codigo_descuento (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- usuario_id 1=ADMIN, 2=CLIENTE, 3=OPERADOR | tipo_estacion 1=PC, 2=PS5, 3=VR
--- pago_id 1-4 en db_pagos (V1 create_pago)
+-- Promociones y códigos iniciales (catálogo)
+INSERT INTO promocion (nombre, descripcion, tipo, descuento_pct, fecha_inicio, fecha_fin, activo) VALUES
+('Verano Gaming', 'Descuento de temporada en sesiones', 'PORCENTAJE', 15.00, '2026-01-01', '2026-12-31', 1),
+('Bienvenida', 'Descuento para nuevos clientes', 'PORCENTAJE', 10.00, '2026-01-01', '2026-12-31', 1),
+('VR Night', 'Promoción nocturna en estaciones VR', 'PORCENTAJE', 20.00, '2026-01-01', '2026-12-31', 1);
 
-INSERT INTO promocion (id, nombre, descripcion, tipo, descuento_pct, fecha_inicio, fecha_fin, activo) VALUES
-(1, 'Verano Gaming', 'Descuento de temporada en sesiones', 'PORCENTAJE', 15.00, '2026-01-01', '2026-12-31', 1),
-(2, 'Bienvenida', 'Descuento para nuevos clientes', 'PORCENTAJE', 10.00, '2026-01-01', '2026-12-31', 1),
-(3, 'VR Night', 'Promoción nocturna en estaciones VR', 'PORCENTAJE', 20.00, '2026-01-01', '2026-12-31', 1);
-
-INSERT INTO codigo_descuento (id, promocion_id, codigo, usos_max, usos_actuales, activo) VALUES
-(1, 1, 'VERANO2026', 100, 2, 1),
-(2, 2, 'BIENVENIDA10', 50, 1, 1),
-(3, 3, 'VRNIGHT', 30, 0, 1);
-
-INSERT INTO uso_promocion (id, codigo_descuento_id, usuario_id, pago_id, usado_en) VALUES
-(1, 1, 2, 3, '2026-05-10 18:30:00'),
-(2, 2, 2, 2, '2026-05-08 11:00:00');
+INSERT INTO codigo_descuento (promocion_id, codigo, usos_max, usos_actuales, activo) VALUES
+(1, 'VERANO2026', 100, 0, 1),
+(2, 'BIENVENIDA10', 50, 0, 1),
+(3, 'VRNIGHT', 30, 0, 1);

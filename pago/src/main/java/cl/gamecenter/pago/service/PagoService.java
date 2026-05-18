@@ -6,6 +6,9 @@ import cl.gamecenter.pago.client.SesionClient;
 import cl.gamecenter.pago.client.UsuarioClient;
 import cl.gamecenter.pago.dto.*;
 import cl.gamecenter.pago.entity.PagoEntity;
+import cl.gamecenter.pago.entity.PagoEntity.EstadoPago;
+import cl.gamecenter.pago.entity.PagoEntity.MetodoPago;
+import cl.gamecenter.pago.entity.PagoEntity.TipoPago;
 import cl.gamecenter.pago.repository.PagoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -92,15 +95,15 @@ public class PagoService {
 
     private void aplicarRequest(PagoEntity entity, PagoRequestDTO request) {
         entity.setUsuarioId(request.getUsuarioId());
-        entity.setTipo(request.getTipo());
+        entity.setTipo(TipoPago.valueOf(request.getTipo()));
         entity.setSesionId(request.getSesionId());
         entity.setMembresiaId(request.getMembresiaId());
         entity.setPromocionId(request.getPromocionId());
         entity.setMontoBruto(request.getMontoBruto());
         entity.setDescuentoAplicado(request.getDescuentoAplicado());
         entity.setMontoFinal(request.getMontoFinal());
-        entity.setMetodoPago(request.getMetodoPago());
-        entity.setEstado(request.getEstado());
+        entity.setMetodoPago(MetodoPago.valueOf(request.getMetodoPago()));
+        entity.setEstado(EstadoPago.valueOf(request.getEstado()));
         entity.setReferenciaExterna(request.getReferenciaExterna());
         entity.setFechaPago(request.getFechaPago());
     }
@@ -109,15 +112,15 @@ public class PagoService {
         PagoResponseDTO response = new PagoResponseDTO();
         response.setId(entity.getId());
         response.setUsuarioId(entity.getUsuarioId());
-        response.setTipo(entity.getTipo());
+        response.setTipo(entity.getTipo().name());
         response.setSesionId(entity.getSesionId());
         response.setMembresiaId(entity.getMembresiaId());
         response.setPromocionId(entity.getPromocionId());
         response.setMontoBruto(entity.getMontoBruto());
         response.setDescuentoAplicado(entity.getDescuentoAplicado());
         response.setMontoFinal(entity.getMontoFinal());
-        response.setMetodoPago(entity.getMetodoPago());
-        response.setEstado(entity.getEstado());
+        response.setMetodoPago(entity.getMetodoPago().name());
+        response.setEstado(entity.getEstado().name());
         response.setReferenciaExterna(entity.getReferenciaExterna());
         response.setFechaPago(entity.getFechaPago());
         return response;

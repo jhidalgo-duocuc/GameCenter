@@ -19,13 +19,30 @@ public class NotificacionEntity {
 
     private Long usuarioId;
 
-    private String tipo;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private TipoNotificacion tipo;
 
     private String titulo;
     private String mensaje;
     private Boolean leida;
 
-    private String canal;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private CanalNotificacion canal;
 
     private LocalDateTime createdAt;
+
+    public enum TipoNotificacion {
+        LISTA_ESPERA,
+        PAGO,
+        PROMOCION,
+        SISTEMA
+    }
+
+    public enum CanalNotificacion {
+        APP,
+        EMAIL,
+        PUSH
+    }
 }

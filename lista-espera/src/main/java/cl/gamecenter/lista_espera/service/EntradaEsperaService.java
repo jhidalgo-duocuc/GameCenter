@@ -5,6 +5,7 @@ import cl.gamecenter.lista_espera.client.TipoEstacionClient;
 import cl.gamecenter.lista_espera.client.UsuarioClient;
 import cl.gamecenter.lista_espera.dto.*;
 import cl.gamecenter.lista_espera.entity.EntradaEsperaEntity;
+import cl.gamecenter.lista_espera.entity.EntradaEsperaEntity.EstadoEspera;
 import cl.gamecenter.lista_espera.repository.EntradaEsperaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -34,7 +35,8 @@ public class EntradaEsperaService {
             throw new RuntimeException("El tipo de estación no está activo");
         }
 
-        if ("NOTIFICADO".equals(request.getEstado())) {
+        EstadoEspera estado = EstadoEspera.valueOf(request.getEstado());
+        if (estado == EstadoEspera.NOTIFICADO) {
             NotificacionClientDTO notificacion = new NotificacionClientDTO();
             notificacion.setUsuarioId(request.getUsuarioId());
             notificacion.setTipo("LISTA_ESPERA");
@@ -84,7 +86,7 @@ public class EntradaEsperaService {
         entity.setUsuarioId(request.getUsuarioId());
         entity.setTipoEstacionId(request.getTipoEstacionId());
         entity.setPosicion(request.getPosicion());
-        entity.setEstado(request.getEstado());
+        entity.setEstado(EstadoEspera.valueOf(request.getEstado()));
         entity.setFechaIngreso(request.getFechaIngreso());
         entity.setFechaNotificacion(request.getFechaNotificacion());
         entity.setExpiraEn(request.getExpiraEn());
@@ -96,7 +98,7 @@ public class EntradaEsperaService {
         response.setUsuarioId(entity.getUsuarioId());
         response.setTipoEstacionId(entity.getTipoEstacionId());
         response.setPosicion(entity.getPosicion());
-        response.setEstado(entity.getEstado());
+        response.setEstado(entity.getEstado().name());
         response.setFechaIngreso(entity.getFechaIngreso());
         response.setFechaNotificacion(entity.getFechaNotificacion());
         response.setExpiraEn(entity.getExpiraEn());

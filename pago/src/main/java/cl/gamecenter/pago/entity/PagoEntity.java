@@ -20,7 +20,9 @@ public class PagoEntity {
 
     private Long usuarioId;
 
-    private String tipo;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private TipoPago tipo;
 
     @Column(nullable = true)
     private Long sesionId;
@@ -35,9 +37,33 @@ public class PagoEntity {
     private BigDecimal descuentoAplicado;
     private BigDecimal montoFinal;
 
-    private String metodoPago;
-    private String estado;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private MetodoPago metodoPago;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private EstadoPago estado;
 
     private String referenciaExterna;
     private LocalDateTime fechaPago;
+
+    public enum TipoPago {
+        SESION,
+        MEMBRESIA
+    }
+
+    public enum MetodoPago {
+        EFECTIVO,
+        TARJETA,
+        TRANSFERENCIA,
+        QR
+    }
+
+    public enum EstadoPago {
+        PENDIENTE,
+        COMPLETADO,
+        RECHAZADO,
+        ANULADO
+    }
 }
