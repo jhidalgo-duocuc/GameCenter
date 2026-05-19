@@ -4,7 +4,7 @@ import cl.gamecenter.reserva.dto.EstacionClientDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
-@FeignClient(name = "estacion-service", url = "http://localhost:8082")
+@FeignClient(name = "estacion")
 public interface EstacionClient {
 
     @GetMapping("/api/estaciones/{id}")
