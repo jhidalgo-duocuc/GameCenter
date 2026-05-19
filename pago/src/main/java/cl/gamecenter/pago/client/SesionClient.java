@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.*;
 @FeignClient(name = "control-tiempo")
 public interface SesionClient {
 
-    @GetMapping("/api/sesiones/{id}")
+    @GetMapping("/api/v1/sesiones/{id}")
     SesionClientDTO buscarPorId(@PathVariable Long id);
 }

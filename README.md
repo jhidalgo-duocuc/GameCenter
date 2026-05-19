@@ -70,6 +70,21 @@ Eureka Server (:8761) — service discovery
 
 ---
 
+## API REST
+
+Todas las rutas usan el prefijo **`/api/v1/`**.
+
+- **Cliente externo (Postman):** `http://localhost:8080/api/v1/...` (API Gateway)
+- **Microservicio directo:** `http://localhost:808X/api/v1/...` (desarrollo / Feign)
+
+Ejemplos:
+
+- `POST /api/v1/auth/login`
+- `GET /api/v1/pagos`
+- `POST /api/v1/sesiones`
+
+---
+
 ## Cómo levantar el proyecto
 
 ```bash

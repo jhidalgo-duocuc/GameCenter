@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.*;
 @FeignClient(name = "notificacion")
 public interface NotificacionClient {
 
-    @PostMapping("/api/notificaciones")
+    @PostMapping("/api/v1/notificaciones")
     void crear(@RequestBody NotificacionClientDTO request);
 }

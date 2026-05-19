@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/config-espera")
+@RequestMapping("/api/v1/config-espera")
 public class ConfigEsperaController {
 
     private final ConfigEsperaService configEsperaService;

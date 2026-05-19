@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.*;
 @FeignClient(name = "promocion")
 public interface PromocionClient {
 
-    @GetMapping("/api/promociones/{id}")
+    @GetMapping("/api/v1/promociones/{id}")
     PromocionClientDTO buscarPorId(@PathVariable Long id);
 }

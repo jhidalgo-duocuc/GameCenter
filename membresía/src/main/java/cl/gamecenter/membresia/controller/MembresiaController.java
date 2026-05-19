@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/membresias")
+@RequestMapping("/api/v1/membresias")
 @RequiredArgsConstructor
 public class MembresiaController {
 
