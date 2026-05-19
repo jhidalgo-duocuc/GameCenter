@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/snapshots-ingreso")
+@RequestMapping("/api/v1/snapshots-ingreso")
 public class SnapshotIngresoController {
 
     private final SnapshotIngresoService snapshotIngresoService;

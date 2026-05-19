@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/codigos-descuento")
+@RequestMapping("/api/v1/codigos-descuento")
 public class CodigoDescuentoController {
 
     private final CodigoDescuentoService codigoDescuentoService;

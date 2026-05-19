@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name = "estacion-service", url = "http://localhost:8082")
+@FeignClient(name = "estacion")
 public interface EstacionClient {
 
-    @PutMapping("/api/estaciones/{id}/estado")
+    @PutMapping("/api/v1/estaciones/{id}/estado")
     EstacionClientDTO cambiarEstado(@PathVariable Long id, @RequestParam String nuevoEstado);
 }
