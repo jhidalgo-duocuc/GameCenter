@@ -1,0 +1,237 @@
+version: '3.8'
+
+services:
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root1234
+      MYSQL_USER: adminapp
+      MYSQL_PASSWORD: Admin1234!
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - gamecenter-net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  eureka-server:
+    build: ./eureka-server
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    networks:
+      - gamecenter-net
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8761/actuator/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+
+  usuario:
+    build: ./usuario
+    container_name: ms-usuario
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/db_usuarios?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: adminapp
+      SPRING_DATASOURCE_PASSWORD: Admin1234!
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+    networks:
+      - gamecenter-net
+
+  estacion:
+    build: ./estacion
+    container_name: ms-estacion
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/db_estaciones?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: adminapp
+      SPRING_DATASOURCE_PASSWORD: Admin1234!
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+    networks:
+      - gamecenter-net
+
+  reserva:
+    build: ./reserva
+    container_name: ms-reserva
+    ports:
+      - "8083:8083"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/db_reservas?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: adminapp
+      SPRING_DATASOURCE_PASSWORD: Admin1234!
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+    networks:
+      - gamecenter-net
+
+  control-tiempo:
+    build: ./control-tiempo
+    container_name: ms-control-tiempo
+    ports:
+      - "8084:8084"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/db_sesiones?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: adminapp
+      SPRING_DATASOURCE_PASSWORD: Admin1234!
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+    networks:
+      - gamecenter-net
+
+  membresia:
+    build: ./membresía
+    container_name: ms-membresia
+    ports:
+      - "8085:8085"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/db_membresias?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: adminapp
+      SPRING_DATASOURCE_PASSWORD: Admin1234!
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+    networks:
+      - gamecenter-net
+
+  pago:
+    build: ./pago
+    container_name: ms-pago
+    ports:
+      - "8086:8086"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/db_pagos?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: adminapp
+      SPRING_DATASOURCE_PASSWORD: Admin1234!
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+    networks:
+      - gamecenter-net
+
+  lista-espera:
+    build: ./lista-espera
+    container_name: ms-lista-espera
+    ports:
+      - "8087:8087"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/db_espera?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: adminapp
+      SPRING_DATASOURCE_PASSWORD: Admin1234!
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+    networks:
+      - gamecenter-net
+
+  notificacion:
+    build: ./notificacion
+    container_name: ms-notificacion
+    ports:
+      - "8088:8088"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/db_notificaciones?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: adminapp
+      SPRING_DATASOURCE_PASSWORD: Admin1234!
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+    networks:
+      - gamecenter-net
+
+  reporte:
+    build: ./reporte
+    container_name: ms-reporte
+    ports:
+      - "8089:8089"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/db_reportes?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: adminapp
+      SPRING_DATASOURCE_PASSWORD: Admin1234!
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+    networks:
+      - gamecenter-net
+
+  promocion:
+    build: ./promocion
+    container_name: ms-promocion
+    ports:
+      - "8090:8090"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/db_promociones?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: adminapp
+      SPRING_DATASOURCE_PASSWORD: Admin1234!
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+    networks:
+      - gamecenter-net
+
+  api-gateway:
+    build: ./api-gateway
+    container_name: api-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+    networks:
+      - gamecenter-net
+
+networks:
+  gamecenter-net:
+    driver: bridge
+
+volumes:
+  mysql_data:

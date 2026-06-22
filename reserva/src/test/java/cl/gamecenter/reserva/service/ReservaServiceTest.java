@@ -165,15 +165,22 @@ class ReservaServiceTest {
     }
 
     // TESTS: cancelar()
-
     @Test
     @DisplayName("cancelar() - debe cancelar reserva en estado PENDIENTE")
     void cancelar_debeCancelarReserva_cuandoEstadoPendiente() {
-
         entidadGuardada.setEstado(ReservaEntity.EstadoReserva.PENDIENTE);
         when(reservaRepository.findById(1L)).thenReturn(Optional.of(entidadGuardada));
-        entidadGuardada.setEstado(ReservaEntity.EstadoReserva.CANCELADA);
-        when(reservaRepository.save(any())).thenReturn(entidadGuardada);
+
+        ReservaEntity entidadCancelada = new ReservaEntity();
+        entidadCancelada.setId(1L);
+        entidadCancelada.setUsuarioId(1L);
+        entidadCancelada.setEstacionId(10L);
+        entidadCancelada.setFechaInicio(entidadGuardada.getFechaInicio());
+        entidadCancelada.setFechaFin(entidadGuardada.getFechaFin());
+        entidadCancelada.setEstado(ReservaEntity.EstadoReserva.CANCELADA);
+        entidadCancelada.setCreatedAt(LocalDateTime.now());
+
+        when(reservaRepository.save(any())).thenReturn(entidadCancelada);
 
         ReservaResponseDTO resultado = reservaService.cancelar(1L);
 
