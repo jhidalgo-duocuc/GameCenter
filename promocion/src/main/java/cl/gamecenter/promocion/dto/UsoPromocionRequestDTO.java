@@ -11,15 +11,15 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class UsoPromocionRequestDTO {
 
-    @NotNull
+    @NotNull(message = "El código de descuento es obligatorio")
     private Long codigoDescuentoId;
 
-    @NotNull
+    @NotNull(message = "El usuario es obligatorio")
     private Long usuarioId;
 
-    @NotNull
+    @NotNull(message = "El pago es obligatorio")
     private Long pagoId;
 
-    @NotNull
+    @NotNull(message = "La fecha de uso es obligatoria")
     private LocalDateTime usadoEn;
 }

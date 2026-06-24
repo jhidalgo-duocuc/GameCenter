@@ -2,6 +2,7 @@ package cl.gamecenter.promocion.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
 
 @Getter
@@ -10,18 +11,20 @@ import lombok.*;
 @AllArgsConstructor
 public class CodigoDescuentoRequestDTO {
 
-    @NotNull
+    @NotNull(message = "La promoción es obligatoria")
     private Long promocionId;
 
-    @NotBlank
+    @NotBlank(message = "El código es obligatorio")
     private String codigo;
 
-    @NotNull
+    @NotNull(message = "Los usos máximos son obligatorios")
+    @PositiveOrZero(message = "Los usos máximos no pueden ser negativos")
     private Integer usosMax;
 
-    @NotNull
+    @NotNull(message = "Los usos actuales son obligatorios")
+    @PositiveOrZero(message = "Los usos actuales no pueden ser negativos")
     private Integer usosActuales;
 
-    @NotNull
+    @NotNull(message = "El estado activo es obligatorio")
     private Boolean activo;
 }

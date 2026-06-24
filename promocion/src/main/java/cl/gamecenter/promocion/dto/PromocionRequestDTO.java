@@ -2,6 +2,7 @@ package cl.gamecenter.promocion.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -13,24 +14,25 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class PromocionRequestDTO {
 
-    @NotBlank
+    @NotBlank(message = "El nombre es obligatorio")
     private String nombre;
 
-    @NotBlank
+    @NotBlank(message = "La descripción es obligatoria")
     private String descripcion;
 
-    @NotBlank
+    @NotBlank(message = "El tipo es obligatorio")
     private String tipo;
 
-    @NotNull
+    @NotNull(message = "El porcentaje de descuento es obligatorio")
+    @PositiveOrZero(message = "El descuento no puede ser negativo")
     private BigDecimal descuentoPct;
 
-    @NotNull
+    @NotNull(message = "La fecha de inicio es obligatoria")
     private LocalDate fechaInicio;
 
-    @NotNull
+    @NotNull(message = "La fecha de fin es obligatoria")
     private LocalDate fechaFin;
 
-    @NotNull
+    @NotNull(message = "El estado activo es obligatorio")
     private Boolean activo;
 }

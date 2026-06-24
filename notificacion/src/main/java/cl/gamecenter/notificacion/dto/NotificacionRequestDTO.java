@@ -12,24 +12,24 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class NotificacionRequestDTO {
 
-    @NotNull
+    @NotNull(message = "El usuario es obligatorio")
     private Long usuarioId;
 
-    @NotBlank
+    @NotBlank(message = "El tipo es obligatorio")
     private String tipo;
 
-    @NotBlank
+    @NotBlank(message = "El título es obligatorio")
     private String titulo;
 
-    @NotBlank
+    @NotBlank(message = "El mensaje es obligatorio")
     private String mensaje;
 
-    @NotNull
+    @NotNull(message = "El estado leído es obligatorio")
     private Boolean leida;
 
-    @NotBlank
+    @NotBlank(message = "El canal es obligatorio")
     private String canal;
 
-    @NotNull
+    @NotNull(message = "La fecha de creación es obligatoria")
     private LocalDateTime createdAt;
 }
