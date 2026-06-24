@@ -2,6 +2,7 @@ package cl.gamecenter.lista_espera.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -12,19 +13,20 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class EntradaEsperaRequestDTO {
 
-    @NotNull
+    @NotNull(message = "El usuario es obligatorio")
     private Long usuarioId;
 
-    @NotNull
+    @NotNull(message = "El tipo de estación es obligatorio")
     private Long tipoEstacionId;
 
-    @NotNull
+    @NotNull(message = "La posición es obligatoria")
+    @Positive(message = "La posición debe ser mayor a 0")
     private Integer posicion;
 
-    @NotBlank
+    @NotBlank(message = "El estado es obligatorio")
     private String estado;
 
-    @NotNull
+    @NotNull(message = "La fecha de ingreso es obligatoria")
     private LocalDateTime fechaIngreso;
 
     private LocalDateTime fechaNotificacion;

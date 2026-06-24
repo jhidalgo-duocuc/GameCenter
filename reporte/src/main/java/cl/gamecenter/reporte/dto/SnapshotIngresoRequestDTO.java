@@ -2,6 +2,7 @@ package cl.gamecenter.reporte.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -13,24 +14,29 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class SnapshotIngresoRequestDTO {
 
-    @NotBlank
+    @NotBlank(message = "El periodo es obligatorio")
     private String periodo;
 
-    @NotNull
+    @NotNull(message = "El total de sesiones es obligatorio")
+    @PositiveOrZero(message = "El total de sesiones no puede ser negativo")
     private Integer totalSesiones;
 
-    @NotNull
+    @NotNull(message = "El total de membresías es obligatorio")
+    @PositiveOrZero(message = "El total de membresías no puede ser negativo")
     private Integer totalMembresias;
 
-    @NotNull
+    @NotNull(message = "Los ingresos brutos son obligatorios")
+    @PositiveOrZero(message = "Los ingresos brutos no pueden ser negativos")
     private BigDecimal ingresosBrutos;
 
-    @NotNull
+    @NotNull(message = "El total de descuentos es obligatorio")
+    @PositiveOrZero(message = "El total de descuentos no puede ser negativo")
     private BigDecimal descuentosTotal;
 
-    @NotNull
+    @NotNull(message = "Los ingresos netos son obligatorios")
+    @PositiveOrZero(message = "Los ingresos netos no pueden ser negativos")
     private BigDecimal ingresosNetos;
 
-    @NotNull
+    @NotNull(message = "La fecha de generación es obligatoria")
     private LocalDateTime generatedAt;
 }

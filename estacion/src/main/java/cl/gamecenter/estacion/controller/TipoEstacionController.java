@@ -2,6 +2,7 @@ package cl.gamecenter.estacion.controller;
 
 import cl.gamecenter.estacion.dto.TipoEstacionRequestDTO;
 import cl.gamecenter.estacion.dto.TipoEstacionResponseDTO;
+import cl.gamecenter.estacion.exception.ErrorResponseDTO;
 import cl.gamecenter.estacion.service.TipoEstacionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -31,7 +32,7 @@ public class TipoEstacionController {
             @ApiResponse(responseCode = "201", description = "Tipo creado exitosamente",
                     content = @Content(schema = @Schema(implementation = TipoEstacionResponseDTO.class))),
             @ApiResponse(responseCode = "400", description = "Datos inválidos o nombre duplicado",
-                    content = @Content)
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
     })
     @PostMapping
     public ResponseEntity<TipoEstacionResponseDTO> crear(@Valid @RequestBody TipoEstacionRequestDTO dto) {
